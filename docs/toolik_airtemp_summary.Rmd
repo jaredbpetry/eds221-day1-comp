@@ -5,6 +5,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+#install.packages("here")
+#install.packages("janitor")
 library(tidyverse)
 library(here)
 library(janitor)
