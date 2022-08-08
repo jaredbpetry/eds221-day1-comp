@@ -1,0 +1,57 @@
+---
+title: "toolik_chlorophyll_summary"
+format: html
+editor: visual
+execute: 
+  eval: true
+  echo: true
+  warning: false
+---
+
+## Changed some yml stuff above
+
+eval true is telling it to evaluate the code in the final doc i think
+
+echo true puts the code in the document
+
+warning false i'm not sure what this did
+
+### Attach Libraries 
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(here)
+library(skimr)
+```
+
+## Read in Data 
+
+```{r}
+toolik_chlor <- read_csv(here::here("data", "data-raw", "toolik_chlorophyll.csv"),
+                         na = c(".")) %>%
+  clean_names()
+```
+
+```{r}
+skimr::skim(toolik_chlor)
+```
+
+```{r}
+chlor_pprod_graph <- ggplot(data = toolik_chlor, 
+                            aes(x = active_chl_a_ug_l, 
+                                y = pprod_mg_available_c_m3_d)) +
+  geom_point()
+
+chlor_pprod_graph
+```
+
+### Now that we have the graph we are going to export it as a jpg file
+
+```{r}
+ggsave(plot = chlor_pprod_graph, 
+       here::here("figs", "my_awesome_graph.jpg"), 
+       width = 8, 
+       height = 8, 
+       dpi = 200)
+```
